@@ -1,0 +1,6 @@
+title: DIDShare
+description: A Lightweight Protocol for Digital Collaboration
+theme: minima
+header_pages:
+  - readme.md
+  - requirements.md
