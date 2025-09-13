@@ -1,59 +1,43 @@
-# DIDShare Protocol Documentation
+# DIDShare: A Lightweight Protocol for Digital Collaboration
 
-Welcome to the **DIDShare** protocol documentation. This protocol enables secure, verifiable sharing of data resources identified by DIDs (Decentralized Identifiers).
+## Abstract
 
-## Overview
-DIDShare defines a pattern for:
-- Assigning DIDs to individual data resources
-- Granting access using Verifiable Credentials (VCs)
-- Subscribing to updates via DIDComm
+European programmes like DSSC and DSIC have made it clear that digital collaboration across organizations is a priority. Current initiatives such as Gaia-X and iSHARE aim to achieve this by creating complex governance models, compliance requirements, and heavy infrastructures. While these initiatives are ambitious, they often come with onboarding barriers and slow adoption, especially for SMEs.
 
-## Example Use Case
-A live eCMR document in logistics has its own DID. Authorized parties can:
-- Pull current state via URL in the DID Document
-- Use a VC/VP as an access token
-- Receive updates via DIDComm messaging
+DIDShare takes a different approach. Instead of building another dataspace with strict participation rules, it provides a lightweight layer of trust between organizations. The core principle is simple: if two parties already know and trust each other, they should be able to collaborate digitally without months of onboarding or compliance checks. DIDShare achieves this by using decentralized identifiers (DIDs), verifiable credentials (VCs), and secure communication standards to enable direct, verifiable, and flexible data sharing.
 
-## DID Document Structure
-```json
-{
-  "@context": "https://www.w3.org/ns/did/v1",
-  "id": "did:data:ecmr-5678",
-  "controller": "did:org:logisticsco",
-  "service": [
-    {
-      "id": "#data-access",
-      "type": "DIDDataService",
-      "serviceEndpoint": "https://dataservice.example.com/ecmr/5678"
-    },
-    {
-      "id": "#subscription",
-      "type": "DIDCommMessaging",
-      "serviceEndpoint": "https://msg.example.com/didcomm",
-      "routingKeys": ["did:key:z6Mk..."],
-      "accept": ["didcomm/v2"]
-    }
-  ]
-}
-```
+The result is a protocol that aligns with Europe’s trust and sovereignty goals but lowers the threshold for participation. It also creates room for a new market of SaaS tools and services that can operationalize this approach, making it commercially valuable and feasible for broad adoption.
 
-## Access Credential Example
-```json
-{
-  "@context": ["https://www.w3.org/2018/credentials/v1"],
-  "type": ["VerifiableCredential", "DIDDataAccessGrant"],
-  "issuer": "did:data:ecmr-5678",
-  "credentialSubject": {
-    "id": "did:org:carrierco",
-    "resource": "did:data:ecmr-5678",
-    "permissions": ["read", "subscribe"]
-  },
-  "issuanceDate": "2025-05-05T12:00:00Z"
-}
-```
+## 1. Why DIDShare is Needed
 
-## More
-This is a minimal starting point. For more, see:
-- [DIDComm v2](https://identity.foundation/didcomm-messaging/spec/)
-- [ZCap-LD](https://w3c-ccg.github.io/zcap-ld/)
-- [VC Data Model](https://www.w3.org/TR/vc-data-model/)
+Today’s digital collaboration initiatives often build walled gardens: closed ecosystems that demand compliance, certification, and strict governance. This slows down innovation and excludes smaller companies who cannot afford the overhead. Yet many organizations only want one thing: to safely and quickly exchange data with partners they already know and trust.
+
+DIDShare is designed precisely for this. It fulfills the generic requirements of a dataspace—trust, sovereignty, interoperability—but without the complexity. There is no mandatory onboarding process, no lock-in, and no central gatekeeper. By using DIDs and VCs, trust is established through cryptographic proofs and credentials that can come from existing trust anchors such as business registries or eIDAS providers. This approach makes it possible to start working together within hours rather than months.
+
+## 2. How DIDShare Works
+
+At its core, DIDShare allows organizations to represent themselves with a DID. In the DID Document, they can expose certain verifiable credentials publicly, such as a company registration or an identity credential from a trust anchor. These credentials make it immediately clear who they are, without needing prior approval from a dataspace operator.
+
+Access to digital resources is granted through “Access Credentials.” These credentials specify which party can access which resource, under which conditions, and with which rights (for example, read, write, or subscribe to updates). If necessary, these credentials can also be delegated to a third party, making it possible to set up flexible supply chains and collaborations.
+
+For communication, DIDShare uses DIDComm, a secure messaging layer. This allows not only negotiation and exchange of access rights but also subscription to updates. For example, if a partner subscribes to a resource, they can automatically receive a notification when that resource changes. Data transfer itself can happen through existing APIs, or optionally through standardized protocols like DSP.
+
+Authorization is handled by presenting verifiable credentials (or a presentation of them) to an authorization service, which checks them with a nonce and then issues a short-lived token for actual API access. This ensures security without requiring new infrastructure on the data provider’s side.
+
+## 3. High-Level Architecture
+
+From a high-level perspective, DIDShare is not a platform but a protocol. It does not demand a new dataspace or marketplace but allows existing systems to interoperate securely. Each organization can operate its own wallet—either on-premise or as a SaaS service—that manages DIDs, credentials, and secure communications.
+
+Such wallets will play a crucial role. They will allow organizations to set which credentials they want to expose publicly, receive and delegate access rights, subscribe to updates, and connect directly to their internal systems. The wallet becomes the bridge between existing IT systems and the world of trusted, verifiable collaboration.
+
+## 4. Commercial Opportunity
+
+Because DIDShare keeps the technical layer lightweight, it opens the door for a vibrant market of online tools and services. SaaS wallets are one obvious category, providing organizations with user-friendly interfaces to manage their digital trust relationships. Other services may emerge for monitoring, analytics, or sector-specific credential schemas.
+
+This commercial feasibility is an important aspect. Where heavy dataspaces struggle with adoption and sustainability, DIDShare lowers the barrier to entry and allows SMEs as well as larger corporates to participate quickly. A broad market of tools will make the ecosystem more resilient, more innovative, and more self-sustaining.
+
+## 5. Conclusion
+
+DIDShare offers a pragmatic alternative to existing dataspace initiatives. By re-using proven standards such as DIDs, VCs, and DIDComm, and by removing unnecessary compliance layers, it enables organizations to collaborate digitally in a way that is both secure and simple. It fulfills the European mission of trustworthy digital collaboration while keeping participation open and low-cost.
+
+Most importantly, it creates immediate value. Organizations can start working together digitally without delay, while a new market for SaaS tools can provide the user-friendly solutions needed for wide adoption. In this way, DIDShare combines technical credibility with commercial viability, making it a feasible and sustainable path forward for digital collaboration in Europe.
