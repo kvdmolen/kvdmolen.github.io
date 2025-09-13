@@ -1,3 +1,9 @@
+---
+title: Requirements
+nav_order: 1
+has_children: false
+---
+
 # Requirements for practical digital collaboration
 
 #### 1. Open Participation (No Onboarding Burden): Any legitimate party should be able to collaborate digitally without mandatory onboarding into a central governance scheme or technical “walled garden.”
